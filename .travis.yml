@@ -9,6 +9,6 @@ script:
   - ./scripts/test
 after_success:
   # Report test coverage to coveralls.io
-  - . ./bin/activate && coveralls
+  - . ./bin/activate && codecov
 notifications:
   email: false
