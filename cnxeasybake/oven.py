@@ -714,11 +714,16 @@ class Oven():
         strval = ''
         vals = []
 
-        for term in value:
-            if type(term) is ast.WhitespaceToken:
-                pass
+        # Special case: allow empty string literal
+        not_whitespace = list(
+            filter(lambda x: type(x) is not ast.WhitespaceToken, value))
+        if (len(not_whitespace) == 1 and
+                type(not_whitespace[0]) is ast.StringToken and
+                not_whitespace[0].value == ''):
+            vals.append('')
 
-            elif type(term) is ast.StringToken:
+        for term in not_whitespace:
+            if type(term) is ast.StringToken:
                 strval += term.value
 
             elif type(term) is ast.IdentToken:
